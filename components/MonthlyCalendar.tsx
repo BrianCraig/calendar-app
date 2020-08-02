@@ -1,8 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { eachDayOfInterval, format, formatISO } from 'date-fns';
+import { eachDayOfInterval, format, formatISO, isSameDay } from 'date-fns';
 import { Chip } from '@material-ui/core';
 import { useRouter } from 'next/router';
+import { EventsContext } from '../contexts/EventsContext';
+import { Event } from '../models/event';
 
 const useStylesDayCalendarPreview = makeStyles((theme) => ({
   root: {
@@ -16,7 +18,7 @@ const useStylesDayCalendarPreview = makeStyles((theme) => ({
   }
 }));
 
-export const DayCalendarPreview: React.FunctionComponent<{ day: Date }> = ({ day }) => {
+export const DayCalendarPreview: React.FunctionComponent<{ day: Date, dayEvents: Event[] }> = ({ day, dayEvents }) => {
   const styles = useStylesDayCalendarPreview();
   const router = useRouter();
 
@@ -29,26 +31,16 @@ export const DayCalendarPreview: React.FunctionComponent<{ day: Date }> = ({ day
   >
     <Chip size="small" label={format(day, 'do')} />
     <br />
-    <Chip
+    {dayEvents.slice(0, 3).map((event) => <Chip
       variant="outlined"
       size="small"
-      label="Do the cleaning"
-    />
-    <Chip
-      variant="outlined"
-      size="small"
-      label="Go to the Movies"
-    />
-    <Chip
-      variant="outlined"
-      size="small"
-      label="Buy tickets for tonight at xxx large description"
+      label={event.title}
       className={styles.eventChip}
-    />
-    <Chip
+    />)}
+    {(dayEvents.length > 3) && <Chip
       size="small"
-      label="3+ Events"
-    />
+      label={`${dayEvents.length - 3}+ Events`}
+    />}
   </div>
 }
 
@@ -64,7 +56,11 @@ const useStylesMonthlyCalendar = makeStyles((theme) => ({
 export const MonthlyCalendar: React.FunctionComponent = () => {
   const styles = useStylesMonthlyCalendar();
   const days = eachDayOfInterval({ start: new Date(2020, 6, 26), end: new Date(2020, 8, 5) })
+  const { events } = React.useContext(EventsContext);
   return <div className={styles.grid}>
-    {days.map((day) => <DayCalendarPreview day={day} />)}
+    {days.map((day) => (<DayCalendarPreview
+      day={day}
+      dayEvents={events.filter((event) => isSameDay(new Date(event.dateTime), day))}
+    />))}
   </div>
 }
