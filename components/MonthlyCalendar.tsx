@@ -1,8 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { eachDayOfInterval, format } from 'date-fns';
+import { eachDayOfInterval, format, formatISO } from 'date-fns';
 import { Chip } from '@material-ui/core';
-
+import { useRouter } from 'next/router';
 
 const useStylesDayCalendarPreview = makeStyles((theme) => ({
   root: {
@@ -18,28 +18,36 @@ const useStylesDayCalendarPreview = makeStyles((theme) => ({
 
 export const DayCalendarPreview: React.FunctionComponent<{ day: Date }> = ({ day }) => {
   const styles = useStylesDayCalendarPreview();
-  return <div className={styles.root}>
+  const router = useRouter();
+
+  const goToDay = () => {
+    router.push('/day/[date]', `/day/${formatISO(day, { representation: 'date' })}`);
+  }
+  return <div
+    className={styles.root}
+    onClick={goToDay}
+  >
     <Chip size="small" label={format(day, 'do')} />
     <br />
     <Chip
-        variant="outlined"
-        size="small"
-        label="Do the cleaning"
+      variant="outlined"
+      size="small"
+      label="Do the cleaning"
     />
     <Chip
-        variant="outlined"
-        size="small"
-        label="Go to the Movies"
+      variant="outlined"
+      size="small"
+      label="Go to the Movies"
     />
     <Chip
-        variant="outlined"
-        size="small"
-        label="Buy tickets for tonight at xxx large description"
-        className={styles.eventChip}
+      variant="outlined"
+      size="small"
+      label="Buy tickets for tonight at xxx large description"
+      className={styles.eventChip}
     />
     <Chip
-        size="small"
-        label="3+ Events"
+      size="small"
+      label="3+ Events"
     />
   </div>
 }
