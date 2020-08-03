@@ -8,6 +8,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Link from 'next/link';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -23,25 +24,8 @@ const useStyles = makeStyles((theme) => ({
   cardGrid: {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8),
-  },
-  card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  cardMedia: {
-    paddingTop: '56.25%', // 16:9
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
-  },
+  }
 }));
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export const AppLayout: React.FunctionComponent = ({ children }) => {
   const classes = useStyles();
@@ -70,9 +54,11 @@ export const AppLayout: React.FunctionComponent = ({ children }) => {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <Button variant="contained" color="primary">
-                    Add a New Event
-                  </Button>
+                  <Link href={"/new-event"}>
+                    <Button variant="contained" color="primary">
+                      Add a New Event
+                    </Button>
+                  </Link>
                 </Grid>
               </Grid>
             </div>
