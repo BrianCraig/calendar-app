@@ -76,12 +76,29 @@ const useEventForm = (event: Event) => {
   }
 }
 
+const checkError = (title:string) => {
+  if(title.length === 0){
+    return "Your title should not be empty"
+  }
+  if(title.length > 30){
+    return "Your title should not be larger than 30 characters"
+  }
+  return ""
+}
+
 export const EventEditor: React.FunctionComponent<{ event: Event, onFinalize: (event: Event) => any }> = ({ event, onFinalize }) => {
+  const [titleError, setTitleError] = useState("")
   const styles = useStyles();
   const form = useEventForm(event);
   const router = useRouter();
 
   const onSubmit = () => {
+    const error = checkError(form.title);
+    if(error !== ""){
+      setTitleError(error);
+      return;
+    }
+
     onFinalize({
       id: event.id,
       title: form.title,
@@ -101,6 +118,8 @@ export const EventEditor: React.FunctionComponent<{ event: Event, onFinalize: (e
           className={styles.input}
           value={form.title}
           onChange={form.setTitle}
+          error={titleError!==""}
+          helperText={titleError}
         />
         <br />
         <TextField 
