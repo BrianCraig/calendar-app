@@ -61,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
+    borderTop: '4px solid #000'
   },
   cardContent: {
     flexGrow: 1,
@@ -79,7 +80,7 @@ export const DayCalendar: React.FunctionComponent<{events: Event[]}> = ({events}
   return <Grid container spacing={4}>
     {events.map((event) => (
       <Grid item key={event.id} xs={12} sm={6} md={4}>
-        <Card className={classes.card}>
+        <Card className={classes.card} style={{borderColor: event.color}}>
           <CardContent className={classes.cardContent}>
             <Typography gutterBottom variant="h4" component="h2">
             {event.title}

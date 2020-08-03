@@ -36,6 +36,7 @@ export const DayCalendarPreview: React.FunctionComponent<{ day: Date, dayEvents:
       size="small"
       label={event.title}
       className={styles.eventChip}
+      style={{borderColor: event.color}}
     />)}
     {(dayEvents.length > 3) && <Chip
       size="small"
