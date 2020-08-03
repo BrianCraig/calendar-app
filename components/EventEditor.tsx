@@ -97,6 +97,7 @@ export const EventEditor: React.FunctionComponent<{ event: Event, onFinalize: (e
       <CardContent>
         <TextField
           label="Event Title"
+          id="form-title-input"
           className={styles.input}
           value={form.title}
           onChange={form.setTitle}
@@ -104,6 +105,7 @@ export const EventEditor: React.FunctionComponent<{ event: Event, onFinalize: (e
         <br />
         <TextField 
           label="Location"
+          id="form-location-input"
           className={styles.input}
           value={form.location}
           onChange={form.setLocation}
@@ -111,6 +113,7 @@ export const EventEditor: React.FunctionComponent<{ event: Event, onFinalize: (e
         <br />
         <DateTimePicker
           autoOk
+          id="form-datetime-input"
           ampm={false}
           value={form.timedate}
           onChange={form.setTimedate}
@@ -120,7 +123,7 @@ export const EventEditor: React.FunctionComponent<{ event: Event, onFinalize: (e
         <br />
         <Select
           labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          id="form-color-input"
           className={styles.input}
           value={form.color}
           onChange={form.setColor}
@@ -129,7 +132,7 @@ export const EventEditor: React.FunctionComponent<{ event: Event, onFinalize: (e
         </Select>
       </CardContent>
       <CardActions className={styles.buttons}>
-        <Button variant="contained" color="primary" onClick={onSubmit}>Save</Button>
+        <Button variant="contained" color="primary" onClick={onSubmit} id="submit">Save</Button>
       </CardActions>
     </Card>
   </MuiPickersUtilsProvider>
