@@ -25,14 +25,14 @@ const defaultEvents: Event[] = [
     color: "#50fa7b"
   },
   {
-    id: 0,
+    id: 3,
     title: "This should overflow",
     dateTime: (add(new Date(), {seconds: 3})).toISOString(),
     location: { id: 3, name: "Texas, USA" },
     color: "#50fa7b"
   },
   {
-    id: 0,
+    id: 4,
     title: "Tomorrow",
     dateTime: (add(new Date(), {days: 1})).toISOString(),
     location: { id: 3, name: "Texas, USA" },

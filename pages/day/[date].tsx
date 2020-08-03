@@ -1,13 +1,17 @@
 import Head from 'next/head'
-import { format } from 'date-fns';
+import React from 'react';
+import { format, parseISO } from 'date-fns';
 import { useRouter } from 'next/router';
 import { Typography } from '@material-ui/core';
 import { DayCalendar } from '../../components/DayCalendar';
+import { filterEventsByDay } from '../../models/event';
+import { EventsContext } from '../../contexts/EventsContext';
 
 export default function Home() {
   const {query: {date}} = useRouter();
   // TODO check bad query usages
-  const nativeDate = new Date(date as string);
+  const nativeDate = parseISO(date as string);
+  const { events } = React.useContext(EventsContext);
   return (
     <div>
       <Head>
@@ -16,7 +20,7 @@ export default function Home() {
       </Head>
 
       <Typography>Events for {format(nativeDate, 'PPP')}</Typography>
-      <DayCalendar />
+      <DayCalendar events={filterEventsByDay(events, nativeDate)} />
     </div>
   )
 }

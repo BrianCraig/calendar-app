@@ -16,10 +16,12 @@ import Avatar from '@material-ui/core/Avatar';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import Divider from '@material-ui/core/Divider';
+import { Event } from '../models/event';
+import { format, parseISO } from 'date-fns';
 
 
 
-export const DayCalendarData: React.FunctionComponent = () => {
+export const DayCalendarData: React.FunctionComponent<{event: Event}> = ({event}) => {
   return (
     <List>
       <ListItem>
@@ -28,7 +30,7 @@ export const DayCalendarData: React.FunctionComponent = () => {
             <ScheduleIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary="Time" secondary="Today at 22:35PM" />
+        <ListItemText primary="Time" secondary={format(parseISO(event.dateTime), 'p')} />
       </ListItem>
       <Divider variant="inset" component="li" />
       <ListItem>
@@ -37,7 +39,7 @@ export const DayCalendarData: React.FunctionComponent = () => {
             <LocationCityIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary="Location" secondary="Irapuato Guanajuato, Mexico" />
+        <ListItemText primary="Location" secondary={event.location.name} />
       </ListItem>
       <Divider variant="inset" component="li" />
       <ListItem>
@@ -65,18 +67,18 @@ const useStyles = makeStyles((theme) => ({
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-export const DayCalendar: React.FunctionComponent = () => {
+export const DayCalendar: React.FunctionComponent<{events: Event[]}> = ({events}) => {
   const classes = useStyles();
 
   return <Grid container spacing={4}>
-    {cards.map((card) => (
-      <Grid item key={card} xs={12} sm={6} md={4}>
+    {events.map((event) => (
+      <Grid item key={event.id} xs={12} sm={6} md={4}>
         <Card className={classes.card}>
           <CardContent className={classes.cardContent}>
             <Typography gutterBottom variant="h4" component="h2">
-            Go to eat dinner
+            {event.title}
             </Typography>
-            <DayCalendarData />
+            <DayCalendarData event={event} />
           </CardContent>
           <CardActions>
             <Button size="small" color="primary">

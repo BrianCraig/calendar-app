@@ -4,7 +4,7 @@ import { eachDayOfInterval, format, formatISO, isSameDay } from 'date-fns';
 import { Chip } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import { EventsContext } from '../contexts/EventsContext';
-import { Event } from '../models/event';
+import { Event, filterEventsByDay } from '../models/event';
 
 const useStylesDayCalendarPreview = makeStyles((theme) => ({
   root: {
@@ -60,7 +60,7 @@ export const MonthlyCalendar: React.FunctionComponent = () => {
   return <div className={styles.grid}>
     {days.map((day) => (<DayCalendarPreview
       day={day}
-      dayEvents={events.filter((event) => isSameDay(new Date(event.dateTime), day))}
+      dayEvents={filterEventsByDay(events, day)}
     />))}
   </div>
 }
