@@ -16,7 +16,7 @@ import Avatar from '@material-ui/core/Avatar';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import Divider from '@material-ui/core/Divider';
-import { Event } from '../models/event';
+import { Event, comparatorByDatetimeAsc } from '../models/event';
 import { format, parseISO } from 'date-fns';
 import { useRouter } from 'next/router';
 import { WeatherStatus } from './EventWeather';
@@ -78,7 +78,7 @@ export const DayCalendar: React.FunctionComponent<{events: Event[]}> = ({events}
   }
 
   return <Grid container spacing={4}>
-    {events.map((event) => (
+    {events.sort(comparatorByDatetimeAsc).map((event) => (
       <Grid item key={event.id} xs={12} sm={6} md={4}>
         <Card className={classes.card} style={{borderColor: event.color}}>
           <CardContent className={classes.cardContent}>

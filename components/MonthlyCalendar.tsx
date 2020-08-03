@@ -4,7 +4,7 @@ import { eachDayOfInterval, format, formatISO, isSameDay } from 'date-fns';
 import { Chip } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import { EventsContext } from '../contexts/EventsContext';
-import { Event, filterEventsByDay } from '../models/event';
+import { Event, filterEventsByDay, comparatorByDatetimeAsc } from '../models/event';
 
 const useStylesDayCalendarPreview = makeStyles((theme) => ({
   root: {
@@ -31,7 +31,7 @@ export const DayCalendarPreview: React.FunctionComponent<{ day: Date, dayEvents:
   >
     <Chip size="small" label={format(day, 'do')} />
     <br />
-    {dayEvents.slice(0, 3).map((event) => <Chip
+    {dayEvents.sort(comparatorByDatetimeAsc).slice(0, 3).map((event) => <Chip
       variant="outlined"
       size="small"
       label={event.title}
