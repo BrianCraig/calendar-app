@@ -18,6 +18,7 @@ import ScheduleIcon from '@material-ui/icons/Schedule';
 import Divider from '@material-ui/core/Divider';
 import { Event } from '../models/event';
 import { format, parseISO } from 'date-fns';
+import { useRouter } from 'next/router';
 
 
 
@@ -69,6 +70,10 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export const DayCalendar: React.FunctionComponent<{events: Event[]}> = ({events}) => {
   const classes = useStyles();
+  const router = useRouter();
+  const goToEvent = (event: Event) => () => {
+    router.push('/edit-event/[id]', `/edit-event/${event.id}`);
+  }
 
   return <Grid container spacing={4}>
     {events.map((event) => (
@@ -81,7 +86,7 @@ export const DayCalendar: React.FunctionComponent<{events: Event[]}> = ({events}
             <DayCalendarData event={event} />
           </CardContent>
           <CardActions>
-            <Button size="small" color="secondary">
+            <Button size="small" color="secondary" onClick={goToEvent(event)}>
               Edit
             </Button>
           </CardActions>

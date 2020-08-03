@@ -1,38 +1,38 @@
 import React from 'react';
-import { Event } from '../models/event';
+import { Event, eventsComparatorByIdNegated } from '../models/event';
 import { add } from 'date-fns';
 
 const defaultEvents: Event[] = [
   {
-    id: 0,
+    id: "0",
     title: "Test Event now",
     dateTime: (new Date()).toISOString(),
     location: { id: 3, name: "Texas, USA" },
     color: "#50fa7b"
   },
   {
-    id: 1,
+    id: "1",
     title: "Test Event now n3",
     dateTime: (add(new Date(), { seconds: 2 })).toISOString(),
     location: { id: 3, name: "Missouri, USA" },
     color: "#50fa7b"
   },
   {
-    id: 2,
+    id: "2",
     title: "Test Event now n2",
     dateTime: (add(new Date(), { seconds: 1 })).toISOString(),
     location: { id: 3, name: "Null island, ??" },
     color: "#50fa7b"
   },
   {
-    id: 3,
+    id: "3",
     title: "This should overflow",
     dateTime: (add(new Date(), { seconds: 3 })).toISOString(),
     location: { id: 3, name: "Texas, USA" },
     color: "#50fa7b"
   },
   {
-    id: 4,
+    id: "4",
     title: "Tomorrow",
     dateTime: (add(new Date(), { days: 1 })).toISOString(),
     location: { id: 3, name: "Texas, USA" },
@@ -59,9 +59,8 @@ export const EventsContextProvider: React.FunctionComponent = ({ children }) => 
     {
       events,
       addEvent: (event) => setEvents([...events, { ...event, id: Math.random().toString(36).substring(7) }]),
-      replaceEvent: () => undefined
-    }
-  }>
+      replaceEvent: (event) => setEvents([...(events.filter(eventsComparatorByIdNegated(event.id))), event]),
+    }} >
     {children}
   </EventsContext.Provider >
 }
