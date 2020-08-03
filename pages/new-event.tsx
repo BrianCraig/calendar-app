@@ -15,10 +15,7 @@ const NewEvent = () => {
         event={{
           title: "",
           dateTime: (new Date()).toISOString(),
-          location: {
-            id: 0,
-            name: ""
-          },
+          location: "",
           color: "#000"
         }}
         onFinalize={addEvent}

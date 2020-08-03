@@ -4,7 +4,7 @@ export interface Event {
   id?: string,
   title: string,
   dateTime: string,
-  location: { name: string, id: number },
+  location: string,
   color?: string
 }
 

@@ -13,7 +13,7 @@ test('add a New Event', () => {
   const wrapper = mount(<EventEditor event={{
     title: "",
     dateTime: new Date().toISOString(),
-    location: { id: 0, name: "" },
+    location: "",
     color: "#000"
   }} onFinalize={mockOnFinalize} />);
 
@@ -25,7 +25,7 @@ test('add a New Event', () => {
   expect(mockOnFinalize).toBeCalledTimes(1);
   const finalizeData = mockOnFinalize.mock.calls[0][0];
   expect(finalizeData.title).toBe('New Title');
-  expect(finalizeData.location.name).toBe('Los Angeles, CA');
+  expect(finalizeData.location).toBe('Los Angeles, CA');
   expect(finalizeData.color).toBe('#e91e63');
 
   expect(pushMock).toBeCalledTimes(1);

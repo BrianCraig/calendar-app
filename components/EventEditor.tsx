@@ -61,7 +61,7 @@ const useFormInput = (defaultValue) => {
 
 const useEventForm = (event: Event) => {
   const [title, setTitle] = useFormInput(event.title)
-  const [location, setLocation] = useFormInput(event.location.name)
+  const [location, setLocation] = useFormInput(event.location)
   const [color, setColor] = useFormInput(event.color)
   const [timedate, setTimedate] = useState(new Date(event.dateTime))
   return {
@@ -86,7 +86,7 @@ export const EventEditor: React.FunctionComponent<{ event: Event, onFinalize: (e
       id: event.id,
       title: form.title,
       dateTime: form.timedate.toISOString(),
-      location: { id: 0, name: form.location },
+      location: form.location,
       color: form.color
     })
     router.push('/');

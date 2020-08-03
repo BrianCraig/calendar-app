@@ -40,7 +40,7 @@ export const DayCalendarData: React.FunctionComponent<{event: Event}> = ({event}
             <LocationCityIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary="Location" secondary={event.location.name} />
+        <ListItemText primary="Location" secondary={event.location} />
       </ListItem>
       <Divider variant="inset" component="li" />
       <ListItem>
