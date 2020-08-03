@@ -7,7 +7,7 @@ import { DayCalendar } from '../../components/DayCalendar';
 import { filterEventsByDay } from '../../models/event';
 import { EventsContext } from '../../contexts/EventsContext';
 
-export default function Home() {
+const Home = () => {
   const {query: {date}} = useRouter();
   // TODO check bad query usages
   const nativeDate = parseISO(date as string);
@@ -24,3 +24,8 @@ export default function Home() {
     </div>
   )
 }
+
+// Disable static rendering
+Home.getInitialProps = async (ctx) => ({})
+
+export default Home;
