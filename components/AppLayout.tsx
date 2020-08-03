@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -27,43 +28,51 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export const AppLayout: React.FunctionComponent = ({ children }) => {
+export const AppLayout: React.FunctionComponent<{
+  title?: string,
+  withHeader?: boolean
+}> = ({ children, title = "My Personal Calendar", withHeader }) => {
   const classes = useStyles();
-
   return (
     <React.Fragment>
+      <Head>
+        <title>{title}</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
-          <EventIcon className={classes.icon} />
+          <Link href={"/"}>
+            <EventIcon className={classes.icon} />
+          </Link>
           <Typography variant="h6" color="inherit" noWrap>
-            My Personal Calendar
+            {title}
           </Typography>
         </Toolbar>
       </AppBar>
       <main>
-        {/* Hero unit */}
-        <div className={classes.heroContent}>
+
+        {withHeader && (<div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography component="h1" variant="h3" align="center" color="textPrimary" gutterBottom>
               My personal Calendar
-            </Typography>
+              </Typography>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
               Check your entirely offline Calendar for yourself, All your events are saved on this browser only!
-            </Typography>
+              </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
                   <Link href={"/new-event"}>
                     <Button variant="contained" color="primary">
                       Add a New Event
-                    </Button>
+                      </Button>
                   </Link>
                 </Grid>
               </Grid>
             </div>
           </Container>
-        </div>
+        </div>)}
         <Container className={classes.cardGrid} maxWidth="lg">
           {children}
         </Container>

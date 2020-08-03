@@ -6,22 +6,22 @@ import { Typography } from '@material-ui/core';
 import { DayCalendar } from '../../components/DayCalendar';
 import { filterEventsByDay } from '../../models/event';
 import { EventsContext } from '../../contexts/EventsContext';
+import { AppLayout } from '../../components/AppLayout';
 
 const Home = () => {
   const {query: {date}} = useRouter();
   // TODO check bad query usages
   const nativeDate = parseISO(date as string);
   const { events } = React.useContext(EventsContext);
+  const title = `Events for ${format(nativeDate, 'PPP')}`;
   return (
-    <div>
+    <AppLayout title={title} >
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Typography>Events for {format(nativeDate, 'PPP')}</Typography>
       <DayCalendar events={filterEventsByDay(events, nativeDate)} />
-    </div>
+    </AppLayout>
   )
 }
 

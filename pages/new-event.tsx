@@ -1,17 +1,16 @@
-import Head from 'next/head'
 import React from 'react';
 import { EventEditor } from '../components/EventEditor'
 import { EventsContext } from '../contexts/EventsContext'
+import { AppLayout } from '../components/AppLayout'
+
 
 const NewEvent = () => {
   const { addEvent } = React.useContext(EventsContext)
 
   return (
-    <div>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <AppLayout
+      title={"Add New Event"}
+    >
       <EventEditor
         event={{
           title: "",
@@ -24,7 +23,7 @@ const NewEvent = () => {
         }}
         onFinalize={addEvent}
       />
-    </div>
+    </AppLayout>
   )
 }
 
