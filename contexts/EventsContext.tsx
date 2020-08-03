@@ -13,28 +13,28 @@ const defaultEvents: Event[] = [
   {
     id: 1,
     title: "Test Event now n3",
-    dateTime: (add(new Date(), {seconds: 2})).toISOString(),
+    dateTime: (add(new Date(), { seconds: 2 })).toISOString(),
     location: { id: 3, name: "Missouri, USA" },
     color: "#50fa7b"
   },
   {
     id: 2,
     title: "Test Event now n2",
-    dateTime: (add(new Date(), {seconds: 1})).toISOString(),
+    dateTime: (add(new Date(), { seconds: 1 })).toISOString(),
     location: { id: 3, name: "Null island, ??" },
     color: "#50fa7b"
   },
   {
     id: 3,
     title: "This should overflow",
-    dateTime: (add(new Date(), {seconds: 3})).toISOString(),
+    dateTime: (add(new Date(), { seconds: 3 })).toISOString(),
     location: { id: 3, name: "Texas, USA" },
     color: "#50fa7b"
   },
   {
     id: 4,
     title: "Tomorrow",
-    dateTime: (add(new Date(), {days: 1})).toISOString(),
+    dateTime: (add(new Date(), { days: 1 })).toISOString(),
     location: { id: 3, name: "Texas, USA" },
     color: "#50fa7b"
   }
@@ -42,8 +42,8 @@ const defaultEvents: Event[] = [
 
 interface EventsContextInterface {
   events: Event[],
-  addEvent: (event: Event) => undefined,
-  replaceEvent: (event: Event) => undefined
+  addEvent: (event: Event) => any,
+  replaceEvent: (event: Event) => any
 }
 
 export const EventsContext = React.createContext<EventsContextInterface>({
@@ -55,7 +55,13 @@ export const EventsContext = React.createContext<EventsContextInterface>({
 export const EventsContextProvider: React.FunctionComponent = ({ children }) => {
 
   const [events, setEvents] = React.useState(defaultEvents);
-  return <EventsContext.Provider value={{ events, addEvent: () => undefined, replaceEvent: () => undefined }}>
+  return <EventsContext.Provider value={
+    {
+      events,
+      addEvent: (event) => setEvents([...events, { ...event, id: Math.random().toString(36).substring(7) }]),
+      replaceEvent: () => undefined
+    }
+  }>
     {children}
   </EventsContext.Provider >
 }

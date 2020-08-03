@@ -81,7 +81,7 @@ export const DayCalendar: React.FunctionComponent<{events: Event[]}> = ({events}
             <DayCalendarData event={event} />
           </CardContent>
           <CardActions>
-            <Button size="small" color="primary">
+            <Button size="small" color="secondary">
               Edit
             </Button>
           </CardActions>

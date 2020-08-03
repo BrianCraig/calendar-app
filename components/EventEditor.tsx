@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, TextField, Select, MenuItem, Button, CardContent, CardActions } from "@material-ui/core"
 import { MuiPickersUtilsProvider, DateTimePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import { Event } from '../models/event';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme) => ({
-  card:{
+  card: {
     maxWidth: 400,
   },
   input: {
@@ -52,20 +54,66 @@ const colors: { name: string, color: string }[] = [
   },
 ];
 
-export const EventEditor = () => {
+const useFormInput = (defaultValue) => {
+  const [value, setValue] = useState(defaultValue);
+  return [value, (event) => setValue(event.target.value as string)]
+}
+
+const useEventForm = (event: Event) => {
+  const [title, setTitle] = useFormInput(event.title)
+  const [location, setLocation] = useFormInput(event.location.name)
+  const [color, setColor] = useFormInput(event.color)
+  const [timedate, setTimedate] = useState(new Date(event.dateTime))
+  return {
+    title,
+    setTitle,
+    location,
+    setLocation,
+    color,
+    setColor,
+    timedate,
+    setTimedate
+  }
+}
+
+export const EventEditor: React.FunctionComponent<{ event: Event, onFinalize: (event: Event) => any }> = ({ event, onFinalize }) => {
   const styles = useStyles();
+  const form = useEventForm(event);
+  const router = useRouter();
+
+  const onSubmit = () => {
+    onFinalize({
+      id: event.id,
+      title: form.title,
+      dateTime: form.timedate.toISOString(),
+      location: { id: 0, name: form.location },
+      color: form.color
+    })
+    router.push('/');
+  }
+
   return <MuiPickersUtilsProvider utils={DateFnsUtils}>
     <Card className={styles.card} >
       <CardContent>
-        <TextField id="standard-basic" label="Event Title" className={styles.input} />
+        <TextField
+          label="Event Title"
+          className={styles.input}
+          value={form.title}
+          onChange={form.setTitle}
+        />
         <br />
-        <TextField id="standard-basic" label="Location" className={styles.input} />
+        <TextField 
+          label="Location"
+          className={styles.input}
+          value={form.location}
+          onChange={form.setLocation}
+        />
         <br />
         <DateTimePicker
           autoOk
           ampm={false}
-          value={new Date()}
-          onChange={() => { }}
+          value={form.timedate}
+          onChange={form.setTimedate}
           label="Date and Time"
           className={styles.input}
         />
@@ -73,15 +121,15 @@ export const EventEditor = () => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={"#000"}
           className={styles.input}
-          onChange={() => { }}
+          value={form.color}
+          onChange={form.setColor}
         >
           {colors.map(color => <MenuItem key={color.color} value={color.color}><span className={styles.block} style={{ backgroundColor: color.color }}></span>{color.name}</MenuItem>)}
         </Select>
       </CardContent>
       <CardActions className={styles.buttons}>
-        <Button variant="contained" color="primary">Save</Button>
+        <Button variant="contained" color="primary" onClick={onSubmit}>Save</Button>
       </CardActions>
     </Card>
   </MuiPickersUtilsProvider>
