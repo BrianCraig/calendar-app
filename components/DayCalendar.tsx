@@ -19,6 +19,7 @@ import Divider from '@material-ui/core/Divider';
 import { Event } from '../models/event';
 import { format, parseISO } from 'date-fns';
 import { useRouter } from 'next/router';
+import { WeatherStatus } from './EventWeather';
 
 
 
@@ -49,7 +50,7 @@ export const DayCalendarData: React.FunctionComponent<{event: Event}> = ({event}
             <WbSunnyIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary="Weather" secondary="Sunny, 22°C" />
+        <ListItemText primary="Weather" secondary={<WeatherStatus event={event} />} />
       </ListItem>
     </List>
   );

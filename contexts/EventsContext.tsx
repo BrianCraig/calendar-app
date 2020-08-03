@@ -35,7 +35,7 @@ const defaultEvents: Event[] = [
     id: "4",
     title: "Tomorrow",
     dateTime: (add(new Date(), { days: 1 })).toISOString(),
-    location: "Texas, USA",
+    location: "Texas",
     color: "#50fa7b"
   }
 ]
