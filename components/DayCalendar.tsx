@@ -95,5 +95,6 @@ export const DayCalendar: React.FunctionComponent<{events: Event[]}> = ({events}
         </Card>
       </Grid>
     ))}
+    {events.length === 0 && <Typography variant={"h4"}>No Events for this day!</Typography>}
   </Grid>;
 }
