@@ -1,0 +1,1 @@
+export const weatherApiKey =  process.env.NEXT_PUBLIC_OPENWEATHERMAP_KEY;
