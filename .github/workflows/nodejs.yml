@@ -23,5 +23,5 @@ jobs:
       env:
         CI: true
     
-  env:
-    NEXT_PUBLIC_OPENWEATHERMAP_KEY: ${{ secrets.OPENWEATHERMAPKEY }}
+    env:
+      NEXT_PUBLIC_OPENWEATHERMAP_KEY: ${{ secrets.OPENWEATHERMAPKEY }}
