@@ -1,9 +1,10 @@
 import React from 'react'
 import useFetch from "react-fetch-hook";
 import { Event } from "../models/event";
+import { weatherApiKey } from '../utils/env';
 
 export const WeatherStatus: React.FunctionComponent<{ event: Event }> = ({ event }) => {
-  const { isLoading, data } = useFetch(`https://api.openweathermap.org/data/2.5/find?q=${event.location}&units=metric&appid=${process.env.NEXT_PUBLIC_OPENWEATHERMAP_KEY}`);
+  const { isLoading, data } = useFetch(`https://api.openweathermap.org/data/2.5/find?q=${event.location}&units=metric&appid=${weatherApiKey}`);
   if (isLoading) {
     return <>{"Loading..."}</>
   }
